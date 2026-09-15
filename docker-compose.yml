@@ -1,0 +1,31 @@
+services:
+  pet-embed:
+    build:
+      context: .
+    image: pet-embed:latest
+    container_name: pet-embed
+    restart: unless-stopped
+    ports:
+      - "8001:8001"
+    environment:
+      # 构建期不需要 API_KEY（环境变量不进镜像），这里给默认值兜底；
+      # 真正的外层防护在 `make up` 里校验（见 Makefile），避免 change-me 对外鉴权
+      - API_KEY=${API_KEY:-change-me}
+      - AUTH_ENABLED=true
+      - TORCH_THREADS=4
+      - MIN_CONF=0.25
+      - CROP_PAD=0.05
+      - SQUARE_CROP=true
+      - MAX_IMAGE_BYTES=20971520
+      # 模型路径默认值已烘焙进镜像（Dockerfile ENV），仅在需要覆盖时取消注释
+      # - FEATURE_MODEL=models/dinov2
+      # - YOLO_WEIGHTS=models/yolov8n.pt
+    # 运行时替换模型（挂载前确保本机路径存在，否则 Docker 会创建空目录覆盖镜像内模型）
+    # volumes:
+    #   - ./models/dinov2:/app/models/dinov2:ro
+    #   - ./models/yolov8n.pt:/app/models/yolov8n.pt:ro
+    deploy:
+      resources:
+        limits:
+          cpus: "4"
+          memory: 4g

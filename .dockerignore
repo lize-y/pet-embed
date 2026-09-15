@@ -1,0 +1,10 @@
+.git
+.venv/bin
+.venv/lib/python3.11/site-packages/pip*
+.venv/lib/python3.11/site-packages/*dist-info/RECORD
+__pycache__
+*.pyc
+.pytest_cache
+.env
+test_images
+*.md

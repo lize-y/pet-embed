@@ -1,0 +1,24 @@
+# 环境
+.env
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# 测试素材
+test_images/
+
+# OpenCode 会话记录
+.omo/
+
+# codegraph 索引数据库（本地缓存）
+.codegraph/
+
+# 模型权重（构建产物 ~91MB，从 HF/本地重建，不进 git）
+models/*
+!models/.gitkeep
+
+# ultralytics 运行时产物
+runs/
+datasets/
+weights/
